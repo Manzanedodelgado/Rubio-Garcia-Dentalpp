@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: rubio-garcia-mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: rubio_garcia_dentapp
+
+  backend:
+    build: ./backend
+    container_name: rubio-garcia-backend
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongodb
+    environment:
+      MONGODB_URL: mongodb://mongodb:27017
+      MONGODB_DB: rubio_garcia_dentapp
+      WHATSAPP_SERVICE_URL: http://whatsapp-service:3001
+      FRONTEND_URL: http://localhost:3000
+    volumes:
+      - ./backend:/app
+
+  whatsapp-service:
+    build: ./whatsapp-service
+    container_name: rubio-garcia-whatsapp
+    restart: always
+    ports:
+      - "3001:3001"
+    environment:
+      PORT: 3001
+      BACKEND_API_URL: http://backend:8000
+    volumes:
+      - ./whatsapp-service:/app
+      - whatsapp_session:/app/whatsapp_session
+
+  frontend:
+    build: ./frontend
+    container_name: rubio-garcia-frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      VITE_API_URL: http://localhost:8000/api
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+volumes:
+  mongodb_data:
+  whatsapp_session:

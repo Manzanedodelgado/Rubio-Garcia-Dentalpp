@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply text-rendering-optimizeLegibility;
+  }
+
+  body {
+    @apply font-body text-base text-neutral-800 bg-neutral-50;
+    font-feature-settings: 'tnum' 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-bold text-neutral-900;
+  }
+
+  h1 {
+    @apply text-3xl leading-[40px] tracking-tight;
+  }
+
+  h2 {
+    @apply text-2xl leading-[32px] tracking-tight;
+  }
+
+  h3 {
+    @apply text-xl leading-[28px];
+  }
+
+  /* Soporte para reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Scrollbar personalizado */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-neutral-100;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-neutral-400 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-neutral-600;
+  }
+}
+
+@layer components {
+  /* Botón primario */
+  .btn-primary {
+    @apply h-11 px-6 bg-primary-500 text-white font-medium rounded-base shadow-sm;
+    @apply hover:bg-primary-700 hover:shadow-md hover:-translate-y-px;
+    @apply active:scale-98;
+    @apply transition-all duration-fast;
+    @apply disabled:bg-neutral-100 disabled:text-neutral-400 disabled:cursor-not-allowed;
+  }
+
+  /* Botón secundario */
+  .btn-secondary {
+    @apply h-11 px-6 bg-transparent border-1.5 border-neutral-300 text-neutral-700 font-medium rounded-base;
+    @apply hover:border-primary-500 hover:text-primary-700 hover:bg-primary-50;
+    @apply transition-all duration-fast;
+  }
+
+  /* Botón acento */
+  .btn-accent {
+    @apply h-11 px-6 bg-accent-600 text-neutral-900 font-semibold rounded-base shadow-sm;
+    @apply hover:shadow-accent hover:scale-102;
+    @apply transition-all duration-fast;
+  }
+
+  /* Input estándar */
+  .input-base {
+    @apply h-11 px-4 bg-white border-1.5 border-neutral-200 rounded-base text-base text-neutral-800;
+    @apply placeholder:text-neutral-400 placeholder:italic;
+    @apply focus:border-primary-500 focus:outline-none focus:ring-3 focus:ring-primary-500/10;
+    @apply transition-all duration-fast;
+  }
+
+  /* Card estándar */
+  .card {
+    @apply p-6 bg-white border border-neutral-100 rounded-md shadow-base;
+    @apply hover:shadow-md;
+    @apply transition-shadow duration-base;
+  }
+
+  /* Card métrica */
+  .card-metric {
+    @apply p-6 bg-gradient-to-br from-white to-neutral-50 rounded-md shadow-base;
+  }
+}
